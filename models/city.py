@@ -19,6 +19,6 @@ Attributes:
                       nullable=False)
     places = relationship(
         "Place",
-        cascade="all",
+        cascade="all, delete",
         backref=backref("cities", cascade="all"),
         passive_deletes=True)
