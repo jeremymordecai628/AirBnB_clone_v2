@@ -24,7 +24,7 @@ __objects: storage for objects
         Args:
             obj: given object
         """
-        if obj is None:
+        if not obj:
             return
         key = "{}.{}".format(type(obj).__class__.__name__, obj.id)
         if key in self.__objects:
