@@ -6,8 +6,7 @@ from sqlalchemy import Column, Integer, String, MetaData
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy import ForeignKey
 from models.base_model import Base
-from models.place import Place
-from models.review import Review
+import models
 
 
 class User(BaseModel, Base):
