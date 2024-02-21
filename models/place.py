@@ -31,7 +31,8 @@ class Place(BaseModel, Base):
     reviews = relationship('Review',
             cascade='all, delete',
             backref='place')
-    amenities = relationship("Amenity", seconday=place_amenity, viewonly=False)
+    amenities = relationship("Amenity", secondary=place_amenity, viewonly=False)
+    amenity_ids = []
 
     @property
     def amenities(self):
@@ -42,7 +43,10 @@ class Place(BaseModel, Base):
     def amenities(self, amenity):
         """sets the conditions for amenities"""
         if isinstance(amenity, Amenity):
-            self.amenities.append(amenity.id)
+            if amenity.id not in self.amenity_ids:
+                self.amenity_ids.append(amenity.id)
+        else:
+            pass
 
     @property
     def reviews(self):
