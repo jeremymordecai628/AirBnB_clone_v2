@@ -6,7 +6,6 @@ from sqlalchemy import Column, Integer, String, MetaData
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy import ForeignKey
 from models.base_model import Base
-import models
 
 
 class User(BaseModel, Base):
