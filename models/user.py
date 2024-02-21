@@ -3,7 +3,7 @@
 from models.base_model import BaseModel
 import sys
 from sqlalchemy import Column, Integer, String, MetaData
-from sqlalchemy.orm import relationship, backref
+from sqlalchemy.orm import relationship
 from sqlalchemy import ForeignKey
 from models.base_model import Base
 
@@ -20,4 +20,4 @@ class User(BaseModel, Base):
             backref=backref('user', cascade='all, delete'))
     reviews = relationship('Review',
             cascade='all, delete',
-            backref=backref('user', cascade='all, delete'))
+            backref=backref('user', cascade='all, delete')
