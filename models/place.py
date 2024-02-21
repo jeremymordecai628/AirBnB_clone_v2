@@ -25,6 +25,9 @@ class Place(BaseModel, Base):
     reviews = relationship('Review',
             cascade='all, delete',
             backref='place')
+    place_amenity = Table('place_amenity', Base.metadata,
+            Column('Place_id', String(60), primary_key=True ForeignKey('place.id'), nullable=False),
+            Column('amenity_id', String(60), primary_key=True, ForeignKey('amenities.id'), nullable=False))
 
     @property
     def reviews(self):
