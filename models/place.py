@@ -6,6 +6,7 @@ from sqlalchemy import Column, String, Integer, Float
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy import ForeignKey
 from models.city import City
+from sqlalchemy import Table
 
 
 place_amenity = Table('place_amenity', Base.metadata,
