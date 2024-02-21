@@ -9,3 +9,4 @@ from sqlalchemy import Table, Column, Integer, ForeignKey, String
 class Amenity(BaseModel, Base):
     __tablename__ = 'amenities'
     name = Column(String(128), nullable=False)
+    place_amenities = realationship("place", secondary='place_amenity')

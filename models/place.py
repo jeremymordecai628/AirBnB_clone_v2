@@ -8,6 +8,11 @@ from sqlalchemy import ForeignKey
 from models.city import City
 
 
+place_amenity = Table('place_amenity', Base.metadata,
+        Column('place_id', String(60), ForeignKey('places.id'), primary_key=True, nullable=False),
+        Column('amenity_id', String(60), ForeignKey('amenities.id'), primary_key=True, nullable=False)
+)
+
 class Place(BaseModel, Base):
     """ A place to stay """
 
@@ -25,9 +30,18 @@ class Place(BaseModel, Base):
     reviews = relationship('Review',
             cascade='all, delete',
             backref='place')
-    place_amenity = Table('place_amenity', Base.metadata,
-            Column('Place_id', String(60), primary_key=True ForeignKey('place.id'), nullable=False),
-            Column('amenity_id', String(60), primary_key=True, ForeignKey('amenities.id'), nullable=False))
+    amenities = relationship("Amenity", seconday=place_amenity, viewonly=False)
+
+    @property
+    def amenities(self):
+        """returns amenities"""
+        return self.amenities
+
+    @amenities.setter
+    def amenities(self, amenity):
+        """sets the conditions for amenities"""
+        if isinstance(amenity, Amenity):
+            self.amenities.append(amenity.id)
 
     @property
     def reviews(self):
