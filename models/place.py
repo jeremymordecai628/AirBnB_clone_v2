@@ -55,13 +55,3 @@ class Place(BaseModel, Base):
             if review.place_id == self.id:
                 reviews_list.append(review)
         return reviews_list
-
-
-class PlaceAmenity(Base):
-    """Association table for Many-to-Many relationship
-    between Place and Amenity"""
-    __tablename__ = 'place_amenity'
-    place_id = Column(String(60), ForeignKey('places.id'), primary_key=True, nullable=False)
-    amenity_id = Column(String(60), ForeignKey('amenities.id'), primary_key=True, nullable=False)
-    amenity = relationship("Amenity", back_populates="place_amenities")
-    place = relationship("Place", back_populates="place_amenities")
