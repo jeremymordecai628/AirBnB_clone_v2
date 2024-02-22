@@ -20,14 +20,14 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         """Instantiation of the base model class.
 
-Parameters:
-- args: not utilized
-- kwargs: arguments for the constructor of the BaseModel
+        Parameters:
+            - args: not utilized
+            - kwargs: arguments for the constructor of the BaseModel
 
-Attributes:
-- id: a unique identifier generated
-- created_at: date of creation
-- updated_at: date of last update
+        Attributes:
+            - id: a unique identifier generated
+            - created_at: date of creation
+            - updated_at: date of last update
         """
         if kwargs:
             for key, value in kwargs.items():
