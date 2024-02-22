@@ -115,10 +115,10 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
-        if not arg:
+        if not args:
             print("** class name missing **")
             return
-        arg_list = arg.split()
+        arg_list = args.split()
         class_name = arg_list[0]
         """ Check if class name is valid """
         if class_name  not in HBNBCommand.classes:
@@ -134,7 +134,7 @@ class HBNBCommand(cmd.Cmd):
             key, value = param.split('=', 1)
             value = value.replace('_', ' ')
             """handle string value, float and int"""
-            if value.startwith('"') and value.endswith('"'):
+            if value.startswith('"') and value.endswith('"'):
                 value = value[1:-1].replace('\\"', '"')
             elif '.' in value:
                 try:
@@ -148,10 +148,11 @@ class HBNBCommand(cmd.Cmd):
                     continue
             obj_dict[key] = value
         """create a new instance"""
-        new_instance = HBNBCommand.classes[args]()
-        storage.save()
-        print(new_instance.id)
-        storage.save()
+        if class_name in HBNBCommand.classes:
+            new_instance = HBNBCommand.classes[class_name](**obj_dict)
+            storage.new(new_instance)
+            storage.save()
+            print(new_instance.id)
 
     def help_create(self):
         """ Help information for the create method """
