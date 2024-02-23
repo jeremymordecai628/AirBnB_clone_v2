@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""This represents the file storage class utilized by AirBnB."""
+"""This is the file storage class for AirBnB"""
 import json
 from models.base_model import BaseModel
 from models.user import User
@@ -11,10 +11,8 @@ from models.review import Review
 
 
 class FileStorage:
-    """This class serializes instances to a JSON file and deserializes a JSON file to instances. It possesses the following attributes:
-
-__file_path: the path to the JSON file
-__objects: storage for objects
+    """This class serializes instances to a JSON file and
+    deserializes JSON file to instances
     """
     __file_path = "file.json"
     __objects = {}
@@ -43,17 +41,16 @@ __objects: storage for objects
         return {k: v for k, v in self.__objects.items() if type(v) == cls}
 
     def new(self, obj):
-        """Assigns the given object to the __objects attribute.
-
-Parameters:
-- obj: the given object
+        """sets __object to given obj
+        Args:
+            obj: given object
         """
         if obj:
             key = "{}.{}".format(type(obj).__name__, obj.id)
             self.__objects[key] = obj
 
     def save(self):
-        """Converts the file path to a JSON file path in a serialized format.
+        """path to JSON file path
         """
         my_dict = {}
         for key, value in self.__objects.items():
@@ -62,7 +59,7 @@ Parameters:
             json.dump(my_dict, f)
 
     def reload(self):
-        """Converts the file path to a JSON file path in a serialized format.
+        """path to JSON file path
         """
         try:
             with open(self.__file_path, 'r', encoding="UTF-8") as f:
@@ -73,5 +70,5 @@ Parameters:
             pass
 
     def close(self):
-        """Reloads to deserialize objects from a JSON file."""
+        """deserialize JSON file objects"""
         self.reload()
