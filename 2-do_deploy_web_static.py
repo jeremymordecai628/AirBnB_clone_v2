@@ -34,18 +34,17 @@ def do_deploy(archive_path):
     if not os.path.exists(archive_path):
         return False
     try:
-        filename = os.path.basename(archive_path)
-        archive_filename = filename.split('/')[-1]
-        archive_folder = archive_filename.replace('.tgz', '')
-
         put(archive_path, '/tmp/')
-        run('mkdir -p /data/web_static/releases/{}/'.format(archive_folder))
-        run('tar -xzf /tmp/{} -C /data/web_static/releases/{}/'.format(archive_filename, archive_folder))
-        run('mv /data/web_static/releases/{}/web_static/* /data/web_static/releases/{}/'
-                .format(archive_folder, archive_folder))
-        run('rm -rf /data/web_static/releases/{}/web_static'.format(archive_folder))
+        filename = os.path.basename(archive_path)
+        archive_folder = "/data/web_static/releases/{}".format(
+                                                        filename.split(".")[0])
+        run('mkdir -p {}'.format(archive_folder))
+        run('tar -xzf /tmp/{} -C {}'.format(filename, archive_folder))
+        run('mv {}/web_static/* {}'.format(archive_folder, archive_folder))
+        run('rm -rf {}/web_static'.format(archive_folder))
         run('rm -rf /data/web_static/current')
-        run('ln /data/web_static/releases/{}/ /data/web_static/current'.format(archive_folder))
+        run('ln {} /data/web_static/current'.format(archive_folder))
+        print("New version deployed!")
         return True
     except Exception as e:
         return False
