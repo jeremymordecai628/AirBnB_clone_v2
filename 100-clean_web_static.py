@@ -11,11 +11,7 @@ def do_clean(number=0):
     """
     cleans out-of-date archives
     """
-    number = int(number)
-    if number > 0:
-        int(number) = number
-    else:
-        number = 1
+    number = int(number) if int(number) != 0 else 1
     local_archives = sorted(os.listdir("versions"))
     [local_archives.pop() for a in range(number)]
     with lcd("versions"):
