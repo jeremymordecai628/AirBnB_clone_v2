@@ -15,14 +15,17 @@ def do_clean(number=0):
         number = int(number)
         if number < 0:
             number = 0
-        local_archives = sorted(os.listdir("versions"), key=os.path.getctime, reverse=True)
+        local_archives = sorted(os.listdir("versions"))
+        [local_archives.pop() for a in range(number)]
         with lcd("versions"):
-            for archive in local_archives[number:]:
-                local(f"rm versions/{archive}")
+            for archive in local_archives:
+                local("rm /{}".format(archive))
         with cd("/data/web_static/releases"):
             remote_archives = run("ls -t").split()
-            for archive in remote_archives[number:]:
-                run(f"rm -rf {archive}")
+            remote_archives = [a for a in remote_archives if "web_static_" in a]
+            [remote_archives.pop() for i in range(number)]
+            for archive in remote_archives:
+                run("rm -rf ./{}".format(archive))
         return True
     except Exception as e:
         print(f"An error occured: {e}")
