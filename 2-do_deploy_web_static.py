@@ -17,14 +17,14 @@ def do_pack():
 
     time_format = "%Y%m%d%H%M%S"
     date_time = datetime.now().strftime(time_format)
-    archive_name = "versions/web_static_" + date_time + ".tgz"
+    archive_path = "versions/web_static_" + date_time + ".tgz"
 
     result = local("tar -cvzf {} web_static".format(archive_name))
 
     if result.failed:
         return None
     else:
-        return archive_name
+        return archive_path
 
 
 def do_deploy(archive_path):
@@ -34,16 +34,17 @@ def do_deploy(archive_path):
     if not os.path.exists(archive_path):
         return False
     try:
-        put(archive_path, '/tmp/')
+        put(archive_path, "/tmp/")
         filename = os.path.basename(archive_path)
         archive_folder = "/data/web_static/releases/{}".format(
                                                         filename.split(".")[0])
         run('mkdir -p {}'.format(archive_folder))
         run('tar -xzf /tmp/{} -C {}'.format(filename, archive_folder))
-        run('mv {}/web_static/* {}'.format(archive_folder, archive_folder))
-        run('rm -rf {}/web_static'.format(archive_folder))
+        run('rm /tmp/{}'.format(filename))
+        run('mv {}/web_static/* {}/'.format(archive_folder, archive_folder))
+        run('rm -rf {}/web_static'.format(archive_follder))
         run('rm -rf /data/web_static/current')
-        run('ln {} /data/web_static/current'.format(archive_folder))
+        run('ln -s {} /data/web_static/current'.format(archive_folder))
         print("New version deployed!")
         return True
     except Exception as e:
