@@ -17,11 +17,11 @@ def do_clean(number=0):
             number = 0
         with lcd("versions"):
             local("ls -t | tail -n +{} | xargs -I {{}} rm {{}}"
-                    .format(number + 1))
+                  .format(number + 1))
         with cd("/data/web_static/releases"):
             run("ls -t | tail -n +{} | xargs -I {{}} rm -rf {{}}"
-                    .format(number + 1))
+                .format(number + 1))
         return True
-    except:
+    except Exception as e:
+        print(f"An error occured: {e}")
         return False
-
