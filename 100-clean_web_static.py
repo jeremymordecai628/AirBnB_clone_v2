@@ -11,22 +11,17 @@ def do_clean(number=0):
     """
     cleans out-of-date archives
     """
-    try:
-        number = int(number)
-        if number < 0:
-            number = 0
-        local_archives = sorted(os.listdir("versions"))
-        [local_archives.pop() for a in range(number)]
-        with lcd("versions"):
-            for archive in local_archives:
-                local("rm /{}".format(archive))
-        with cd("/data/web_static/releases"):
-            remote_archives = run("ls -t").split()
-            remote_archives = [a for a in remote_archives if "web_static_" in a]
-            [remote_archives.pop() for i in range(number)]
-            for archive in remote_archives:
-                run("rm -rf ./{}".format(archive))
-        return True
-    except Exception as e:
-        print(f"An error occured: {e}")
-        return False
+    number = int(number)
+    if number < 0:
+        number = 0
+    local_archives = sorted(os.listdir("versions"))
+    [local_archives.pop() for a in range(number)]
+    with lcd("versions"):
+        for archive in local_archives:
+            local("rm /{}".format(archive))
+    with cd("/data/web_static/releases"):
+        remote_archives = run("ls -t").split()
+        remote_archives = [a for a in remote_archives if "web_static_" in a]
+        [remote_archives.pop() for i in range(number)]
+        for archive in remote_archives:
+            run("rm -rf ./{}".format(archive))
