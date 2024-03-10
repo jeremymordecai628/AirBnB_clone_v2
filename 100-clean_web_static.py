@@ -16,8 +16,9 @@ def do_clean(number=0):
         if number < 0:
             number = 0
         local_archives = sorted(os.listdir("versions"), key=os.path.getctime, reverse=True)
-        for archive in local_archives[number:]:
-            local(f"rm versions/{archives}")
+        with lcd("version"):
+            for archive in local_archives[number:]:
+                local(f"rm versions/{archives}")
         with cd("/data/web_static/releases"):
             remote_archives = run("ls -t").split()
             for archive in remote_archives[number:]:
