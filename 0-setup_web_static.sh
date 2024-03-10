@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # sets up my web server for the deployment of web_static
 # install nginx
 if ! [ -x "$(command -v nginx)" ]; then
@@ -18,7 +17,7 @@ echo "<html>
   <body>
     Holberton School
   </body>
-</html>" | sudo tee /data/web_static/current/index.html > /dev/null
+</html>" | sudo tee /data/web_static/releases/test/index.html > /dev/null
 
 #create symbolic links
 sudo rm -rf /data/web_static/current
