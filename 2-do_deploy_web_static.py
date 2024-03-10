@@ -34,7 +34,8 @@ def do_deploy(archive_path):
     if not os.path.exists(archive_path):
         return False
     try:
-        archive_filename = archive_path.split('/')[-1]
+        filename = os.path.basename(archive_path)
+        archive_filename = filename.split('/')[-1]
         archive_folder = archive_filename.replace('.tgz', '')
 
         put(archive_path, '/tmp/')
