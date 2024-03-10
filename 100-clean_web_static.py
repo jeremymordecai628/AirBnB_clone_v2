@@ -15,12 +15,13 @@ def do_clean(number=0):
         number = int(number)
         if number < 0:
             number = 0
-        with lcd("versions"):
-            local("ls -t | tail -n +{} | xargs -I {{}} rm {{}}"
-                  .format(number + 1))
+        local_archives = sorted(os.listdir("versions"), key=os.path.getctime, reverse=True)
+        for archive in local_archives[number:]:
+            local(f"rm versions/{archives}")
         with cd("/data/web_static/releases"):
-            run("ls -t | tail -n +{} | xargs -I {{}} rm -rf {{}}"
-                .format(number + 1))
+            remote_archives = run("ls -t").split()
+            for archive in remote_archives[number:]:
+                run(f"rm -rf {archive}")
         return True
     except Exception as e:
         print(f"An error occured: {e}")
