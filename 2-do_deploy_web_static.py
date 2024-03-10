@@ -5,7 +5,7 @@ from fabric.api import *
 from datetime import datetime
 import os
 
-env.hosts = ['54.165.3.212-web-01', '100.24.235.18-web-02']
+env.hosts = ['54.165.3.212', '100.24.235.18']
 env.user = "ubuntu"
 
 
@@ -29,7 +29,7 @@ def do_pack():
 
 def do_deploy(archive_path):
     """
-    Distributes an arcchive to my web servers
+    Distributes an archive to my web servers
     """
     if not os.path.exists(archive_path):
         return False
