@@ -17,7 +17,7 @@ def teardown_session(exception):
 def states_list():
     """Displays a HTML page"""
     states = sorted(storage.all("State").values(), key=lambda x: x.name)
-    return render__template('7-states_list.html', states=states)
+    return render_template('7-states_list.html', states=states)
 
 
 if __name__ == "__main__":
